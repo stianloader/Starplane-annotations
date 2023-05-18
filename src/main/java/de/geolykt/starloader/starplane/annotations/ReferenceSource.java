@@ -3,6 +3,13 @@ package de.geolykt.starloader.starplane.annotations;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * An imaginary class from which magic constants are called from.
+ * The semantics of the starplane annotations mean that all references to this class are "inlined" in one way or another,
+ * sometimes with remapping being performed beforehand.
+ *
+ * @since 1.0.0
+ */
 public final class ReferenceSource {
 
     private ReferenceSource() {

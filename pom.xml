@@ -6,46 +6,119 @@
     <artifactId>starplane-annotations</artifactId>
     <version>1.0.0</version>
     <name>Starplane Annotations</name>
-    <description>Annotations aiding in dealing with obfuscated code in a safe
-        manner.</description>
+    <description>Annotations aiding in dealing with obfuscated code in a safe manner.</description>
+    <inceptionYear>2023</inceptionYear>
+    <url>https://github.com/Starloader-project/Starplane-annotations</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <gpg.skip>true</gpg.skip>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>24.0.0</version>
+            <version>24.0.1</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
     </dependencies>
 
+    <licenses>
+        <license>
+            <name>BSD-3-Clause</name>
+            <url>https://opensource.org/license/bsd-3-clause/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>geolykt</id>
+            <email>mail@geolykt.de</email>
+            <name>Geolykt</name>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/starloader-project/starplane-annotations.git</connection>
+        <developerConnection>scm:git:ssh://github.com:starloader-project/starplane-annotations.git</developerConnection>
+        <url>https://github.com/starloader-project/starplane-annotations/tree/main</url>
+    </scm>
+
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
         <repository>
-            <id>geolykt-maven-ftp</id>
-            <!-- This is the developer connection. The actual repository 
-                is located under https://geolykt.de/maven/ -->
-            <url>ftp://geolykt.de/geolykt.de/public_html/maven/</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
     <build>
-        <extensions>
-            <!-- Enabling the use of FTP -->
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>3.5.2</version>
-            </extension>
-        </extensions>
         <plugins>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.11.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <release>8</release>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <keyname>${gpg.keyname}</keyname>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
